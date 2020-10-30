@@ -26,18 +26,19 @@ class MainWindow(QMainWindow):
     
     @Slot()
     def buscar_id(self):
-        self.format_tabla()
         id = self.ui.buscar_lineEdit.text()
         encontrado = False
         for particula in self.admin:
             if id == str(particula.id):
                 self.ui.tabla.clear()
+                self.format_tabla()
                 self.ui.tabla.setRowCount(1)
                 self.llenar_tabla(particula, 0)
                 encontrado = True
                 return
 
         if not encontrado:
+            self.format_tabla()
             QMessageBox.warning(
                 self, 
                 "Atención",
