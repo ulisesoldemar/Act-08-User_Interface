@@ -19,6 +19,7 @@ class MainWindow(QMainWindow):
 
         self.ui.actionAbrir.triggered.connect(self.action_abrir_archivo)
         self.ui.actionGuardar.triggered.connect(self.action_guardar_archivo)
+        self.ui.actionSalir.triggered.connect(self.action_salir)
 
         self.ui.mostrar_pushButton_tabla.clicked.connect(self.mostrar_tabla)
         self.ui.buscar_pushButton.clicked.connect(self.buscar_id)
@@ -126,6 +127,10 @@ class MainWindow(QMainWindow):
                 "Error",
                 "No se pudo crear el archivo " + ubicacion
             )
+    
+    @Slot()
+    def action_salir(self):
+        self.close()
 
     def obtener_datos(self):
         id = self.ui.id_spinBox.value()

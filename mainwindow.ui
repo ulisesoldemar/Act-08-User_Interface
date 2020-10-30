@@ -264,6 +264,9 @@
     </property>
     <addaction name="actionAbrir"/>
     <addaction name="actionGuardar"/>
+    <addaction name="separator"/>
+    <addaction name="separator"/>
+    <addaction name="actionSalir"/>
    </widget>
    <addaction name="menuArchivo"/>
   </widget>
@@ -281,6 +284,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSalir">
+   <property name="text">
+    <string>Salir</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Q</string>
    </property>
   </action>
  </widget>
