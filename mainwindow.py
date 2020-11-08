@@ -1,5 +1,6 @@
-from PySide2.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QTableWidgetItem
 from PySide2.QtCore import Slot
+from PySide2.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QTableWidgetItem, QGraphicsScene
+from PySide2.QtGui import QPen, QColor, QTransform
 from ui_mainwindow import Ui_MainWindow
 from particulas.admin import Admin
 from particulas.particula import Particula
@@ -13,6 +14,7 @@ class MainWindow(QMainWindow):
         
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
         self.ui.agregar_final_pushButton.clicked.connect(self.click_agregar_final)
         self.ui.agregar_inicio_pushButton.clicked.connect(self.click_agregar_inicio)
         self.ui.mostrar_pushButton.clicked.connect(self.click_mostrar)
@@ -23,7 +25,47 @@ class MainWindow(QMainWindow):
 
         self.ui.mostrar_pushButton_tabla.clicked.connect(self.mostrar_tabla)
         self.ui.buscar_pushButton.clicked.connect(self.buscar_id)
+        
+        self.ui.dibujar.clicked.connect(self.dibujar)
+        self.ui.limpiar.clicked.connect(self.limpiar)
+
+        self.scene = QGraphicsScene()
+        self.ui.graphicsView.setScene(self.scene)
     
+    def wheelEvent(self, event):
+        print(event.delta())
+        if event.delta() > 0:
+            self.ui.graphicsView.scale(1.2, 1.2)
+        else:
+            self.ui.graphicsView.scale(0.8, 0.8)
+
+    @Slot()
+    def dibujar(self):
+        print("Dibujar")
+        
+        pen = QPen()
+        pen.setWidth(2)
+
+        for particula in self.admin:
+            
+            color = QColor(particula.red, particula.green, particula.blue)
+            pen.setColor(color)
+
+            origen_x = particula.origen_x
+            origen_y = particula.origen_y
+            destino_x = particula.destino_x
+            destino_y = particula.destino_y
+
+            self.scene.addEllipse(origen_x, origen_y, 6, 6, pen)
+            self.scene.addEllipse(destino_x, destino_y, 6, 6, pen)
+            self.scene.addLine(origen_x + 3, origen_y + 3, destino_x + 3, destino_y + 3, pen)
+
+    @Slot()
+    def limpiar(self):
+        print("Limpiar")
+        self.scene.clear()
+        self.ui.graphicsView.setTransform(QTransform())
+
     @Slot()
     def buscar_id(self):
         id = self.ui.buscar_lineEdit.text()
@@ -39,7 +81,7 @@ class MainWindow(QMainWindow):
 
         if not encontrado:
             self.format_tabla()
-            QMessageBox.warning(
+            QMessageBox.warning (
                 self, 
                 "Atención",
                 f"La partícula con el ID \"{id}\" no fue encontrada."
@@ -48,11 +90,10 @@ class MainWindow(QMainWindow):
     @Slot()
     def mostrar_tabla(self):
         self.format_tabla()
-        self.ui.tabla.setRowCount(len(self.admin))
-        row = 0
-        for particula in self.admin:
-            self.llenar_tabla(particula, row)
-            row += 1
+        total = len(self.admin)
+        self.ui.tabla.setRowCount(total)
+        for row in range(total):
+            self.llenar_tabla(self.admin[row], row)
 
     def format_tabla(self):
         self.ui.tabla.setColumnCount(10)
@@ -86,7 +127,7 @@ class MainWindow(QMainWindow):
     @Slot()
     def action_abrir_archivo(self):
         # print("abrir_archivo")
-        ubicacion = QFileDialog.getOpenFileName(
+        ubicacion = QFileDialog.getOpenFileName (
             self,
             "Abrir archivo",
             '.',
@@ -94,13 +135,13 @@ class MainWindow(QMainWindow):
         )[0]
         print(ubicacion)
         if self.admin.abrir(ubicacion):
-            QMessageBox.information(
+            QMessageBox.information (
                 self,
                 "Éxito",
                 "Se abrió el archivo " + ubicacion
             )
         else:
-            QMessageBox.critical(
+            QMessageBox.critical (
                 self,
                 "Error",
                 "Error al abrir el archivo " + ubicacion
@@ -109,7 +150,7 @@ class MainWindow(QMainWindow):
     @Slot()
     def action_guardar_archivo(self):
         # print("guardar_archivo")
-        ubicacion = QFileDialog.getSaveFileName(
+        ubicacion = QFileDialog.getSaveFileName (
             self,
             "Guardar archivo",
             '.',
@@ -117,13 +158,13 @@ class MainWindow(QMainWindow):
         )[0]
         print(ubicacion)
         if self.admin.guardar(ubicacion):
-            QMessageBox.information(
+            QMessageBox.information (
                 self,
                 "Éxito",
                 "Se puedo crear el archivo " + ubicacion
             )
         else:
-            QMessageBox.critical(
+            QMessageBox.critical (
                 self,
                 "Error",
                 "No se pudo crear el archivo " + ubicacion
@@ -149,7 +190,7 @@ class MainWindow(QMainWindow):
             origen_x, origen_y, destino_x, destino_y
         )))
 
-        return Particula(
+        return Particula (
             id, 
             origen_x, origen_y,
             destino_x, destino_y, 
