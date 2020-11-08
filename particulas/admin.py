@@ -35,6 +35,9 @@ class Admin:
         else:
             raise StopIteration
     
+    def __getitem__(self, key):
+        return self.__particulas[key]
+
     def guardar(self, ubicacion):
         try:
             with open(ubicacion, 'w') as archivo:
