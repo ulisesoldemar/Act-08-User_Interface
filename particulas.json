@@ -1,4 +1,5 @@
-[{
+[
+    {
         "id": 1,
         "origen_x": 500,
         "origen_y": 268,
@@ -30,5 +31,16 @@
         "red": 43,
         "green": 71,
         "blue": 235
+    },
+    {
+        "id": 4,
+        "origen_x": 15,
+        "origen_y": 20,
+        "destino_x": 25,
+        "destino_y": 30,
+        "velocidad": 254,
+        "red": 0,
+        "green": 255,
+        "blue": 0
     }
 ]
