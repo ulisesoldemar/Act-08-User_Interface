@@ -17,7 +17,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(678, 624)
+        MainWindow.resize(678, 659)
         self.actionAbrir = QAction(MainWindow)
         self.actionAbrir.setObjectName(u"actionAbrir")
         self.actionGuardar = QAction(MainWindow)
@@ -164,6 +164,19 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.salida_plainTextEdit, 0, 1, 1, 1)
 
+        self.ordenar_pushButton = QPushButton(self.tab)
+        self.ordenar_pushButton.setObjectName(u"ordenar_pushButton")
+
+        self.gridLayout.addWidget(self.ordenar_pushButton, 3, 0, 1, 1)
+
+        self.ordenar_comboBox = QComboBox(self.tab)
+        self.ordenar_comboBox.addItem("")
+        self.ordenar_comboBox.addItem("")
+        self.ordenar_comboBox.addItem("")
+        self.ordenar_comboBox.setObjectName(u"ordenar_comboBox")
+
+        self.gridLayout.addWidget(self.ordenar_comboBox, 3, 1, 1, 1)
+
         self.agregar_final_pushButton = QPushButton(self.tab)
         self.agregar_final_pushButton.setObjectName(u"agregar_final_pushButton")
 
@@ -177,7 +190,7 @@ class Ui_MainWindow(object):
         self.mostrar_pushButton = QPushButton(self.tab)
         self.mostrar_pushButton.setObjectName(u"mostrar_pushButton")
 
-        self.gridLayout.addWidget(self.mostrar_pushButton, 3, 0, 1, 2)
+        self.gridLayout.addWidget(self.mostrar_pushButton, 4, 0, 1, 2)
 
         self.tabWidget.addTab(self.tab, "")
         self.tab_2 = QWidget()
@@ -280,6 +293,11 @@ class Ui_MainWindow(object):
         self.label_10.setText(QCoreApplication.translate("MainWindow", u"Blue:", None))
         self.label_9.setText(QCoreApplication.translate("MainWindow", u"Green:", None))
         self.label_6.setText(QCoreApplication.translate("MainWindow", u"Velocidad:", None))
+        self.ordenar_pushButton.setText(QCoreApplication.translate("MainWindow", u"Ordenar", None))
+        self.ordenar_comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Por ID (ascendente)", None))
+        self.ordenar_comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"Por distancia (descendente)", None))
+        self.ordenar_comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"Por velocidad (ascendente)", None))
+
         self.agregar_final_pushButton.setText(QCoreApplication.translate("MainWindow", u"Agregar al final", None))
         self.agregar_inicio_pushButton.setText(QCoreApplication.translate("MainWindow", u"Agregar al inicio", None))
         self.mostrar_pushButton.setText(QCoreApplication.translate("MainWindow", u"Mostrar", None))
