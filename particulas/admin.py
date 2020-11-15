@@ -16,7 +16,7 @@ class Admin:
             print(particula)
     
     def __str__(self):
-        return "".join(
+        return "".join (
             str(particula) + '\n' for particula in self.__particulas
         )
     
@@ -57,3 +57,6 @@ class Admin:
             return 1
         except:
             return 0
+    
+    def ordenar(self, by, reversal:bool=False):
+        self.__particulas.sort(key=by, reverse=reversal)
