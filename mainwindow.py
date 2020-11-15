@@ -31,7 +31,30 @@ class MainWindow(QMainWindow):
 
         self.scene = QGraphicsScene()
         self.ui.graphicsView.setScene(self.scene)
+
+        self.ui.ordenar_pushButton.clicked.connect(self.ordenar)
     
+    @Slot()
+    def ordenar(self):
+        print("Ordenar")
+        # Por ID (ascendente)
+        if self.ui.ordenar_comboBox.currentIndex() == 0:
+            self.admin.ordenar(lambda Particula: Particula.id)
+        # Por distancia (descendente)
+        elif self.ui.ordenar_comboBox.currentIndex() == 1:
+            self.admin.ordenar(lambda Particula: Particula.distancia, True)
+        # Por velocidad (ascendente)
+        elif self.ui.ordenar_comboBox.currentIndex() == 2:
+            self.admin.ordenar(lambda Particula: Particula.velocidad)
+        
+        QMessageBox.information (
+            self,
+            "Éxito",
+            "Se ordenaron las partículas " + self.ui.ordenar_comboBox.currentText()
+        )
+        
+        
+
     def wheelEvent(self, event):
         print(event.delta())
         if event.delta() > 0:
