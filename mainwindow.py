@@ -2,6 +2,7 @@ from PySide2.QtCore import Slot
 from PySide2.QtWidgets import QMainWindow, QFileDialog, QMessageBox, QTableWidgetItem, QGraphicsScene
 from PySide2.QtGui import QPen, QColor, QTransform
 from ui_mainwindow import Ui_MainWindow
+from pprint import pprint, pformat
 from particulas.admin import Admin
 from particulas.particula import Particula
 from particulas.algoritmos import distancia_euclidiana
@@ -23,11 +24,11 @@ class MainWindow(QMainWindow):
         self.ui.actionGuardar.triggered.connect(self.action_guardar_archivo)
         self.ui.actionSalir.triggered.connect(self.action_salir)
 
-        self.ui.mostrar_pushButton_tabla.clicked.connect(self.mostrar_tabla)
+        self.ui.mostrar_tabla_pushButton.clicked.connect(self.mostrar_tabla)
         self.ui.buscar_pushButton.clicked.connect(self.buscar_id)
         
-        self.ui.dibujar.clicked.connect(self.dibujar)
-        self.ui.limpiar.clicked.connect(self.limpiar)
+        self.ui.dibujar_pushButton.clicked.connect(self.dibujar)
+        self.ui.limpiar_pushButton.clicked.connect(self.limpiar)
 
         self.scene = QGraphicsScene()
         self.ui.graphicsView.setScene(self.scene)
@@ -50,13 +51,11 @@ class MainWindow(QMainWindow):
         QMessageBox.information (
             self,
             "Éxito",
-            "Se ordenaron las partículas " + self.ui.ordenar_comboBox.currentText()
+            "Se ordenaron las partículas " + self.ui.ordenar_comboBox.currentText().lower()
         )
         
         
-
     def wheelEvent(self, event):
-        print(event.delta())
         if event.delta() > 0:
             self.ui.graphicsView.scale(1.2, 1.2)
         else:
@@ -233,4 +232,8 @@ class MainWindow(QMainWindow):
     @Slot()
     def click_mostrar(self):
         self.ui.salida_plainTextEdit.clear()
-        self.ui.salida_plainTextEdit.insertPlainText(str(self.admin) + '\n')
+        if self.ui.salida_comboBox.currentIndex() == 0:
+            self.ui.salida_plainTextEdit.insertPlainText(str(self.admin) + '\n')
+        elif self.ui.salida_comboBox.currentIndex() == 1:
+            salida = pformat(self.admin.grafo(), width=40, indent=1)
+            self.ui.salida_plainTextEdit.insertPlainText(str(salida))
