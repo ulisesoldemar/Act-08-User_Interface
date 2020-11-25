@@ -237,3 +237,4 @@ class MainWindow(QMainWindow):
         elif self.ui.salida_comboBox.currentIndex() == 1:
             salida = pformat(self.admin.grafo(), width=40, indent=1)
             self.ui.salida_plainTextEdit.insertPlainText(str(salida))
+            pprint(salida)

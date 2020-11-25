@@ -68,15 +68,18 @@ class Admin:
             origen = (particula.origen_x, particula.origen_y)
             destino = (particula.destino_x, particula.destino_y)
             
-            if origen in self.__grafo:
-                self.__grafo[origen].append((particula.destino_x, particula.destino_y, particula.distancia))
-            else:
-                self.__grafo[origen] = [(particula.destino_x, particula.destino_y, particula.distancia)]
-            if destino in self.__grafo:
-                self.__grafo[destino].append((particula.origen_x, particula.origen_y, particula.distancia))
-            else:
-                self.__grafo[destino] = [(particula.origen_x, particula.origen_y, particula.distancia)]
+            arista_o_d = (particula.destino_x, particula.destino_y, int(particula.distancia))
+            arista_d_o = (particula.origen_x, particula.origen_y, int(particula.distancia))
 
+            if origen in self.__grafo:
+                self.__grafo[origen].append(arista_o_d)
+            else:
+                self.__grafo[origen] = [arista_o_d]
+            if destino in self.__grafo:
+                self.__grafo[destino].append(arista_d_o)
+            else:
+                self.__grafo[destino] = [arista_d_o]
+                
         return self.__grafo
 
         
