@@ -1,4 +1,5 @@
 from .particula import Particula
+from .algoritmos import busqueda_profundidad, busqueda_amplitud
 import json
 
 class Admin:
@@ -45,9 +46,9 @@ class Admin:
                 lista = [particula.to_dict() for particula in self.__particulas]
                 print(lista)
                 json.dump(lista, archivo, indent=4)
-            return 1
+            return True
         except:
-            return 0
+            return False
     
     def abrir(self, ubicacion):
         try:
@@ -55,9 +56,9 @@ class Admin:
                 lista = json.load(archivo)
                 print(lista)
                 self.__particulas = [Particula(**particula) for particula in lista]
-            return 1
+            return True
         except:
-            return 0
+            return False
     
     def ordenar(self, by, reversal:bool=False):
         self.__particulas.sort(key=by, reverse=reversal)
@@ -68,8 +69,8 @@ class Admin:
             origen = (particula.origen_x, particula.origen_y)
             destino = (particula.destino_x, particula.destino_y)
             
-            arista_o_d = (particula.destino_x, particula.destino_y, int(particula.distancia))
-            arista_d_o = (particula.origen_x, particula.origen_y, int(particula.distancia))
+            arista_o_d = (destino, int(particula.distancia))
+            arista_d_o = (origen, int(particula.distancia))
 
             if origen in self.__grafo:
                 self.__grafo[origen].append(arista_o_d)
@@ -82,4 +83,14 @@ class Admin:
                 
         return self.__grafo
 
+    def dfs(self, origen):
+        try:
+            return busqueda_profundidad(self.__grafo, origen)
+        except:
+            return False
         
+    def bfs(self, origen):
+        try:
+            return busqueda_amplitud(self.__grafo, origen)
+        except:
+            return False
