@@ -8,6 +8,7 @@ def busqueda_profundidad(grafo:dict, origen):
     pila = deque([origen])
     visitados = set([origen])
     ruta = []
+    print("Origen:", origen)
     print("Profundidad")
     while pila:
         vertice = pila.popleft()
@@ -23,6 +24,7 @@ def busqueda_amplitud(grafo:dict, origen):
     cola = deque([origen])
     visitados = set([origen])
     ruta = []
+    print("Origen:", origen)
     print("Amplitud")
     while cola:
         vertice = cola.popleft()
