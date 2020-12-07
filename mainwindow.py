@@ -16,13 +16,18 @@ class MainWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-        self.ui.agregar_final_pushButton.clicked.connect(self.click_agregar_final)
-        self.ui.agregar_inicio_pushButton.clicked.connect(self.click_agregar_inicio)
+        self.ui.agregar_final_pushButton.clicked.connect(lambda: self.admin.agregar_final(self.obtener_datos()))
+        self.ui.agregar_inicio_pushButton.clicked.connect(lambda: self.admin.agregar_inicio(self.obtener_datos()))
         self.ui.mostrar_pushButton.clicked.connect(self.click_mostrar)
 
         self.ui.actionAbrir.triggered.connect(self.action_abrir_archivo)
         self.ui.actionGuardar.triggered.connect(self.action_guardar_archivo)
-        self.ui.actionSalir.triggered.connect(self.action_salir)
+        self.ui.actionSalir.triggered.connect(lambda: self.close())
+
+        self.ui.actionLista.triggered.connect(lambda: self.ui.salida_comboBox.setCurrentIndex(0))
+        self.ui.actionGrafo.triggered.connect(lambda: self.ui.salida_comboBox.setCurrentIndex(1))
+
+        self.ui.actionRecorrido.triggered.connect(self.recorrido)
 
         self.ui.mostrar_tabla_pushButton.clicked.connect(self.mostrar_tabla)
         self.ui.buscar_pushButton.clicked.connect(self.buscar_id)
@@ -35,6 +40,22 @@ class MainWindow(QMainWindow):
 
         self.ui.ordenar_pushButton.clicked.connect(self.ordenar)
     
+
+    @Slot()
+    def recorrido(self):
+        origen = (self.ui.origen_x_spinBox.value(), self.ui.origen_y_spinBox.value())
+        self.admin.grafo()
+        self.ui.salida_comboBox.setCurrentIndex(1)
+        dfs, bfs = self.admin.dfs(origen), self.admin.bfs(origen)
+        if dfs and bfs:
+            self.ui.salida_plainTextEdit.setPlainText("Profundidad:" + '\n' + dfs + '\n' + "Amplitud:" + '\n' + bfs)
+        else:
+            QMessageBox.critical (
+                self,
+                "Error",
+                "No es posible establecer esa ruta."
+            )
+
     @Slot()
     def ordenar(self):
         print("Ordenar")
@@ -81,6 +102,11 @@ class MainWindow(QMainWindow):
             self.scene.addEllipse(origen_x, origen_y, 6, 6, pen)
             self.scene.addEllipse(destino_x, destino_y, 6, 6, pen)
             self.scene.addLine(origen_x + 3, origen_y + 3, destino_x + 3, destino_y + 3, pen)
+
+            origen = self.scene.addText('(' + str(origen_x) + ', ' + str(origen_y) + ')')
+            origen.setPos(origen_x, origen_y)
+            destino = self.scene.addText('(' + str(destino_x) + ', ' + str(destino_y) + ')')
+            destino.setPos(destino_x, destino_y)
 
     @Slot()
     def limpiar(self):
@@ -191,10 +217,6 @@ class MainWindow(QMainWindow):
                 "Error",
                 "No se pudo crear el archivo " + ubicacion
             )
-    
-    @Slot()
-    def action_salir(self):
-        self.close()
 
     def obtener_datos(self):
         id = self.ui.id_spinBox.value()
@@ -219,15 +241,6 @@ class MainWindow(QMainWindow):
             velocidad,
             red, green, blue
         )
-
-
-    @Slot()
-    def click_agregar_final(self):
-        self.admin.agregar_final(self.obtener_datos())
-    
-    @Slot()
-    def click_agregar_inicio(self):
-        self.admin.agregar_inicio(self.obtener_datos())
 
     @Slot()
     def click_mostrar(self):

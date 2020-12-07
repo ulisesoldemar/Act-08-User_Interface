@@ -3,7 +3,7 @@
 ################################################################################
 ## Form generated from reading UI file 'mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.15.1
+## Created by: Qt User Interface Compiler version 5.15.2
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
@@ -28,6 +28,8 @@ class Ui_MainWindow(object):
         self.actionLista.setObjectName(u"actionLista")
         self.actionGrafo = QAction(MainWindow)
         self.actionGrafo.setObjectName(u"actionGrafo")
+        self.actionRecorrido = QAction(MainWindow)
+        self.actionRecorrido.setObjectName(u"actionRecorrido")
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout_3 = QGridLayout(self.centralwidget)
@@ -234,12 +236,18 @@ class Ui_MainWindow(object):
         self.groupBox_2.setObjectName(u"groupBox_2")
         self.gridLayout_2 = QGridLayout(self.groupBox_2)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
-        self.salida_comboBox = QComboBox(self.groupBox_2)
-        self.salida_comboBox.addItem("")
-        self.salida_comboBox.addItem("")
-        self.salida_comboBox.setObjectName(u"salida_comboBox")
+        self.mostrar_pushButton = QPushButton(self.groupBox_2)
+        self.mostrar_pushButton.setObjectName(u"mostrar_pushButton")
 
-        self.gridLayout_2.addWidget(self.salida_comboBox, 0, 0, 1, 2)
+        self.gridLayout_2.addWidget(self.mostrar_pushButton, 3, 0, 1, 2)
+
+        self.ordenar_comboBox = QComboBox(self.groupBox_2)
+        self.ordenar_comboBox.addItem("")
+        self.ordenar_comboBox.addItem("")
+        self.ordenar_comboBox.addItem("")
+        self.ordenar_comboBox.setObjectName(u"ordenar_comboBox")
+
+        self.gridLayout_2.addWidget(self.ordenar_comboBox, 2, 1, 1, 1)
 
         self.salida_plainTextEdit = QPlainTextEdit(self.groupBox_2)
         self.salida_plainTextEdit.setObjectName(u"salida_plainTextEdit")
@@ -252,18 +260,12 @@ class Ui_MainWindow(object):
 
         self.gridLayout_2.addWidget(self.ordenar_pushButton, 2, 0, 1, 1)
 
-        self.ordenar_comboBox = QComboBox(self.groupBox_2)
-        self.ordenar_comboBox.addItem("")
-        self.ordenar_comboBox.addItem("")
-        self.ordenar_comboBox.addItem("")
-        self.ordenar_comboBox.setObjectName(u"ordenar_comboBox")
+        self.salida_comboBox = QComboBox(self.groupBox_2)
+        self.salida_comboBox.addItem("")
+        self.salida_comboBox.addItem("")
+        self.salida_comboBox.setObjectName(u"salida_comboBox")
 
-        self.gridLayout_2.addWidget(self.ordenar_comboBox, 2, 1, 1, 1)
-
-        self.mostrar_pushButton = QPushButton(self.groupBox_2)
-        self.mostrar_pushButton.setObjectName(u"mostrar_pushButton")
-
-        self.gridLayout_2.addWidget(self.mostrar_pushButton, 3, 0, 1, 2)
+        self.gridLayout_2.addWidget(self.salida_comboBox, 0, 0, 1, 2)
 
 
         self.gridLayout_3.addWidget(self.groupBox_2, 1, 0, 1, 1)
@@ -274,19 +276,26 @@ class Ui_MainWindow(object):
         self.menubar.setGeometry(QRect(0, 0, 800, 25))
         self.menuArchivo = QMenu(self.menubar)
         self.menuArchivo.setObjectName(u"menuArchivo")
+        self.menuVer = QMenu(self.menubar)
+        self.menuVer.setObjectName(u"menuVer")
+        self.menuAlgoritmos = QMenu(self.menubar)
+        self.menuAlgoritmos.setObjectName(u"menuAlgoritmos")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
         self.menubar.addAction(self.menuArchivo.menuAction())
+        self.menubar.addAction(self.menuVer.menuAction())
+        self.menubar.addAction(self.menuAlgoritmos.menuAction())
         self.menuArchivo.addAction(self.actionAbrir)
         self.menuArchivo.addAction(self.actionGuardar)
         self.menuArchivo.addSeparator()
-        self.menuArchivo.addAction(self.actionLista)
-        self.menuArchivo.addAction(self.actionGrafo)
         self.menuArchivo.addSeparator()
         self.menuArchivo.addAction(self.actionSalir)
+        self.menuVer.addAction(self.actionLista)
+        self.menuVer.addAction(self.actionGrafo)
+        self.menuAlgoritmos.addAction(self.actionRecorrido)
 
         self.retranslateUi(MainWindow)
 
@@ -318,6 +327,7 @@ class Ui_MainWindow(object):
 #if QT_CONFIG(shortcut)
         self.actionGrafo.setShortcut(QCoreApplication.translate("MainWindow", u"Ctrl+G", None))
 #endif // QT_CONFIG(shortcut)
+        self.actionRecorrido.setText(QCoreApplication.translate("MainWindow", u"Recorrido en Profundidad/Amplitud", None))
         self.groupBox.setTitle(QCoreApplication.translate("MainWindow", u"Part\u00edcula", None))
         self.agregar_inicio_pushButton.setText(QCoreApplication.translate("MainWindow", u"Agregar al inicio", None))
         self.groupBox_3.setTitle(QCoreApplication.translate("MainWindow", u"Origen", None))
@@ -343,15 +353,17 @@ class Ui_MainWindow(object):
         self.limpiar_pushButton.setText(QCoreApplication.translate("MainWindow", u"Limpiar", None))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_visualizador), QCoreApplication.translate("MainWindow", u"Visualizador", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"Salida", None))
-        self.salida_comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Lista", None))
-        self.salida_comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"Grafo", None))
-
-        self.ordenar_pushButton.setText(QCoreApplication.translate("MainWindow", u"Ordenar", None))
+        self.mostrar_pushButton.setText(QCoreApplication.translate("MainWindow", u"Mostrar", None))
         self.ordenar_comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Por ID", None))
         self.ordenar_comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"Por distancia", None))
         self.ordenar_comboBox.setItemText(2, QCoreApplication.translate("MainWindow", u"Por velocidad", None))
 
-        self.mostrar_pushButton.setText(QCoreApplication.translate("MainWindow", u"Mostrar", None))
+        self.ordenar_pushButton.setText(QCoreApplication.translate("MainWindow", u"Ordenar", None))
+        self.salida_comboBox.setItemText(0, QCoreApplication.translate("MainWindow", u"Lista", None))
+        self.salida_comboBox.setItemText(1, QCoreApplication.translate("MainWindow", u"Grafo", None))
+
         self.menuArchivo.setTitle(QCoreApplication.translate("MainWindow", u"Archivo", None))
+        self.menuVer.setTitle(QCoreApplication.translate("MainWindow", u"Ver", None))
+        self.menuAlgoritmos.setTitle(QCoreApplication.translate("MainWindow", u"Algoritmos", None))
     # retranslateUi
 
